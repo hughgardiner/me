@@ -1,4 +1,3 @@
-import headShot from "../../../public/headshot.png";
 import Image from "next/image";
 import { Heart } from "./svgs/Heart";
 import { api } from "~/trpc/server";
@@ -11,7 +10,7 @@ export const NowPlayingFooter = async () => {
       <div className="flex-1 flex flex-row p-3">
         <div className="flex flex-row justify-between items-center gap-4">
           <Image
-            src={data.albumImageUrl ?? headShot}
+            src={data.albumImageUrl || '/true.png'}
             className="rounded-md"
             alt="Headshot"
             width={70}
