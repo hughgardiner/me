@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ~/.data/pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: pitch_id_local
+      POSTGRES_PASSWORD: pitch_id_local
+    command: ["postgres", "-c", "log_statement=all"]
