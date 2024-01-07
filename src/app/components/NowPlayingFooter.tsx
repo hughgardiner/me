@@ -23,8 +23,6 @@ export const NowPlayingFooter = async () => {
           <Heart />
         </div>
       </div>
-      <div className="flex-1"></div>
-      <div className="flex-1"></div>
     </div>
   );
 };

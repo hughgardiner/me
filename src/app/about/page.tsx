@@ -1,17 +1,57 @@
-import Image from "next/image";
+"use client";
+import React from "react";
 import { PageHeader } from "../components/PageHeader";
-
-const AboutMe = `Passionate Full Stack Developer (from both Web and Mobile Platforms, all the way into the Cloud) and overall team player with excellent communication skills. Experience operating within mid-size Agile Software development teams, serving as a subject matter expert in the data and cloud aspects of enterprise software applications. 
-Demonstrated ability to not just develop enterprise software, but also serve in leadership roles that require the ability to communicate technical and domain expertise to individuals in management positions. 
-Outside of the office, constantly exploring the excitement of new technologies. Shown great interest in mobile development through experimentation with both cross-platform development via React Native and Ionic, as well as native development using Swift. 
-Active member within development community, attending meetups and contributing to open source projects.`;
+import { api } from "~/trpc/react";
 
 export default function About() {
+  const [suggestedSongPrompt, setSuggestedSongPrompt] = React.useState("");
+  const [suggestedSongResponse, setSuggestedSongResponse] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const getSuggestedSong = api.spotify.getSuggestedSongs.useMutation();
+
+  const onInputSubmit = async (_e: React.FormEvent<HTMLButtonElement>) => {
+    try {
+      setIsLoading(true);
+      setSuggestedSongResponse("");
+      const data = await getSuggestedSong.mutateAsync({
+        prompt: suggestedSongPrompt,
+      });
+      setSuggestedSongResponse(data ?? "Oops something went wrong");
+    } catch (error) {
+      let errorMessage = "Ooops something went wrong";
+      if (error instanceof Error) {
+        errorMessage += `: ${error.message}`;
+      }
+      setSuggestedSongResponse(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <section className="from-liked rounded-lg bg-gradient-to-b to-black p-4">
-      <PageHeader pageName={"About Me"} pageImagePath="/aboutMeBig.png" />
-      <div className="flex max-h-full flex-col">
-        <p className="self-start">{AboutMe}</p>
+    <section className="flex flex-col items-start justify-start rounded-lg bg-gradient-to-b from-liked to-black p-4">
+      <div>
+        <PageHeader pageName={"About Me"} pageImagePath="/aboutMeBig.png" />
+      </div>
+      <div className="flex w-full flex-col items-center justify-start self-center pt-4">
+        <input
+          onChange={(e) => setSuggestedSongPrompt(e.target.value)}
+          type="text"
+          className="w-3/4 rounded-full bg-black p-4 text-white"
+          placeholder="Describe the type of music you're in the mood for"
+        />
+        <button
+          disabled={isLoading}
+          className="flex-1 my-3 ml-2 rounded-full bg-blue-500 px-4 py-2 text-white"
+          onClick={onInputSubmit}
+        >
+          {isLoading ? "Loading..." : "Submit"}
+        </button>
+        {suggestedSongResponse && (
+          <div className="rounded-md bg-gray-300 p-4">
+            <p className="text-black">{suggestedSongResponse}</p>
+          </div>
+        )}
       </div>
     </section>
   );

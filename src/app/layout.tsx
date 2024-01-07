@@ -88,8 +88,8 @@ export default function RootLayout({
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider headers={headers()}>
           <div className="flex h-screen flex-1 flex-col">
-            <div className="grid h-2/3 flex-1 grid-cols-main gap-2 px-3 pt-3">
-              <section className="rounded-lg bg-dark p-5">
+            <div className="lg:grid h-2/3 flex-1 grid-cols-main gap-2 px-3 pt-3">
+              <section className="rounded-lg bg-dark p-5 hidden lg:block">
                 <div className="flex flex-row gap-2 p-1">
                   <Library />
                   <h2 className="text-zinc-400">My Library</h2>

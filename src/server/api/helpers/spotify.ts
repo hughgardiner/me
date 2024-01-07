@@ -1,17 +1,19 @@
 import { eq } from "drizzle-orm";
 import { db } from "~/server/db";
+import { env } from "~/env.mjs";
 import { spotify } from "~/server/db/spotify";
 
 const BASE_URL = "https://api.spotify.com/v1";
 
 export function getSpotifyLoginUrl() {
   const scopes = [
+    "user-top-read",
     "user-read-private",
     "user-read-email",
     "user-read-playback-state",
   ];
-  const clientId = process.env.SPOTIFY_CLIENT_ID;
-  const redirectUri = process.env.SPOTIFY_REDIRECT_URI;
+  const clientId = env.SPOTIFY_CLIENT_ID;
+  const redirectUri = env.SPOTIFY_REDIRECT_URI;
   const url = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scopes.join(
     "%20",
   )}&redirect_uri=${redirectUri}`;
@@ -112,7 +114,7 @@ export class SpotifyApi {
     const res = await fetch("https://accounts.spotify.com/api/token", {
       body: new URLSearchParams({
         grant_type: "refresh_token",
-        refresh_token: this.refreshToken ?? '',
+        refresh_token: this.refreshToken ?? "",
       }),
       method: "POST",
       headers: {
@@ -191,5 +193,117 @@ export class SpotifyApi {
       album: response.item.album.name,
       albumImageUrl: response.item.album.images[0]?.url ?? "",
     };
+  }
+
+  async getTopSongs() {
+    await this.refreshAccessTokenIfNeeded();
+    const res = await fetch(
+      `${BASE_URL}/me/top/tracks?` +
+        new URLSearchParams({
+          time_range: "short_term",
+          limit: "50",
+        }).toString(),
+      {
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      },
+    );
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+    const response = (await res.json()) as {
+      items: {
+        name: string;
+        artists: { name: string }[];
+        album: {
+          name: string;
+          images: { url: string }[];
+        };
+      }[];
+    };
+    console.log("response: ", response);
+
+    return response.items.map((item) => ({
+      song: item.name,
+      artist: item.artists[0]?.name ?? "Unknown",
+      album: item.album.name,
+      albumImageUrl: item.album.images[0]?.url ?? "",
+    }));
+  }
+
+  async getPlaylistByName(name: string) {
+    await this.refreshAccessTokenIfNeeded();
+    let playlist = null;
+    let offset = 0;
+    do {
+      const res = await fetch(
+        `${BASE_URL}/me/playlists?` +
+          new URLSearchParams({
+            market: "US",
+            offset: offset.toString(),
+            limit: "50",
+          }).toString(),
+        {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`,
+          },
+        },
+      );
+      const response = (await res.json()) as {
+        items: {
+          id: string;
+          name: string;
+        }[];
+        next: string | null;
+      };
+      console.log("response", response);
+
+      playlist = response.items.find((item) => item.name === name);
+      if (!playlist) {
+        if (!response.next) {
+          throw new Error("No more playlists to search through");
+        }
+        offset += 50;
+      }
+    } while (!playlist);
+    return playlist;
+  }
+
+  async getPlaylistTracks(playlistId: string) {
+    await this.refreshAccessTokenIfNeeded();
+    const res = await fetch(
+      `${BASE_URL}/playlists/${playlistId}/tracks?` +
+        new URLSearchParams({
+          market: "US",
+        }).toString(),
+      {
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      },
+    );
+    const response = (await res.json()) as {
+      items: {
+        track: {
+          id: string;
+          name: string;
+          artists: { name: string }[];
+          album: {
+            name: string;
+            images: { url: string }[];
+          };
+        };
+      }[];
+    };
+
+    return response.items.map((item) => ({
+      id: item.track.id,
+      song: item.track.name,
+      artist: item.track.artists[0]?.name ?? "Unknown",
+      album: item.track.album.name,
+      albumImageUrl: item.track.album.images[0]?.url ?? "",
+    }));
   }
 }
