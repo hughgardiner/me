@@ -20,7 +20,7 @@ export default function Skills() {
         pageImagePath="/skills.png"
       />
       <div className="flex max-h-full flex-col">
-        <h3 className="self-start">Good afternoon</h3>
+        <h3 className="self-start">I have lots, but presentation coming soon :)</h3>
       </div>
     </section>
   );

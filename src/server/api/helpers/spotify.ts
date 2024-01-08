@@ -200,7 +200,7 @@ export class SpotifyApi {
     const res = await fetch(
       `${BASE_URL}/me/top/tracks?` +
         new URLSearchParams({
-          time_range: "short_term",
+          time_range: "medium_term",
           limit: "50",
         }).toString(),
       {

@@ -87,30 +87,32 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider headers={headers()}>
-          <div className="flex h-screen flex-1 flex-col">
-            <div className="lg:grid h-2/3 flex-1 grid-cols-main gap-2 px-3 pt-3">
-              <section className="rounded-lg bg-dark p-5 hidden lg:block">
-                <div className="flex flex-row gap-2 p-1">
-                  <Library />
-                  <h2 className="text-zinc-400">My Library</h2>
-                </div>
-                <div className="flex flex-col max-h-full">
-                  {summaryTiles.map((tile) => (
-                    <Link
-                      href={tile.path}
-                      key={tile.title}
-                      className="flex flex-row gap-2 p-3"
-                    >
-                      {renderChild(tile)}
-                      <div className="flex flex-col">
-                        <h2>{tile.title}</h2>
-                        <h3>{tile.author ?? "Hugh G"}</h3>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-              {children}
+          <div className="flex min-h-screen flex-col">
+            <div className="flex flex-1 flex-col">
+              <div className="h-2/3 flex-1 grid-cols-main gap-2 px-3 pt-3 lg:grid">
+                <section className="hidden rounded-lg bg-dark p-5 lg:block">
+                  <div className="flex flex-row gap-2 p-1">
+                    <Library />
+                    <h2 className="text-zinc-400">My Library</h2>
+                  </div>
+                  <div className="flex max-h-full flex-col">
+                    {summaryTiles.map((tile) => (
+                      <Link
+                        href={tile.path}
+                        key={tile.title}
+                        className="flex flex-row gap-2 p-3"
+                      >
+                        {renderChild(tile)}
+                        <div className="flex flex-col">
+                          <h2>{tile.title}</h2>
+                          <h3>{tile.author ?? "Hugh G"}</h3>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+                <div className="flex-1 overflow-y-auto">{children}</div>
+              </div>
             </div>
             <NowPlayingFooter />
           </div>

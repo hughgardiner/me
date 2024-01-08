@@ -9,7 +9,8 @@ export default function About() {
   const [isLoading, setIsLoading] = React.useState(false);
   const getSuggestedSong = api.spotify.getSuggestedSongs.useMutation();
 
-  const onInputSubmit = async (_e: React.FormEvent<HTMLButtonElement>) => {
+  const onInputSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
       setIsLoading(true);
       setSuggestedSongResponse("");
@@ -34,21 +35,31 @@ export default function About() {
         <PageHeader pageName={"About Me"} pageImagePath="/aboutMeBig.png" />
       </div>
       <div className="flex w-full flex-col items-center justify-start self-center pt-4">
-        <input
-          onChange={(e) => setSuggestedSongPrompt(e.target.value)}
-          type="text"
-          className="w-3/4 rounded-full bg-black p-4 text-white"
-          placeholder="Describe the type of music you're in the mood for"
-        />
-        <button
-          disabled={isLoading}
-          className="flex-1 my-3 ml-2 rounded-full bg-blue-500 px-4 py-2 text-white"
-          onClick={onInputSubmit}
+        <p className="mb-4 text-center text-lg">
+          {
+            "I would love to share my recent music favorites with you! Go ahead and prompt the AI below with what you're in the mood for, and you'll get a suggestion from my Spotify Top 50 in the last 6 months."
+          }
+        </p>
+        <form
+          onSubmit={async (e) => await onInputSubmit(e)}
+          className="flex w-3/4 flex-col items-center"
         >
-          {isLoading ? "Loading..." : "Submit"}
-        </button>
+          <input
+            onChange={(e) => setSuggestedSongPrompt(e.target.value)}
+            type="text"
+            className="mb-2 w-full rounded-full bg-black p-4 text-white"
+            placeholder="What are you in the mood for?"
+          />
+          <button
+            disabled={isLoading}
+            type="submit"
+            className="w-full rounded-full bg-blue-500 px-4 py-2 text-white"
+          >
+            {isLoading ? "Loading..." : "Submit"}
+          </button>
+        </form>
         {suggestedSongResponse && (
-          <div className="rounded-md bg-gray-300 p-4">
+          <div className="mt-3 rounded-md bg-gray-300 p-4">
             <p className="text-black">{suggestedSongResponse}</p>
           </div>
         )}
