@@ -12,7 +12,7 @@ export const skillsRouter = createTRPCRouter({
         messages: [
           {
             role: "user",
-            content: `Given the following Information about Hugh Gardiner, how would you respond to the following prompt:
+            content: `Given the following Information about Hugh Gardiner, can you enthusiastically response to the following prompt in < 3 sentences:
             Informtation: "${SkillSummary}"
             Prompt = "${prompt}"`,
           },

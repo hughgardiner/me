@@ -1,4 +1,5 @@
-export const SkillSummary = `Hugh Gardiner
+export const SkillSummary = `Resume:
+Hugh Gardiner
 Austin, TX | gardinerhugh6@gmail.com | (571) 449-1299 | Github | LinkedIn
 Education
 Bachelor of Engineering, Virginia Polytechnic Institute & State University (Virginia Tech)
@@ -58,4 +59,19 @@ US Government Public Trust Security Clearance
 React Community of Practice Member
 Eagle Scout Rank, Troop 976, Vienna, VA
 React and Python Meetup Participant
+
+Cover Letter:
+My name is Hugh Gardiner and I am an enthusiastic team player who leads by example with my impressive blend of both technical and personable skills. I believe that I have the ability to drive teams to reach their fullest potential through my commitment to collaboration and clean code while elegantly facilitating communication between product and engineering.
+
+My technical skills are unique in breadth and truly embody more than your typical full stack
+engineer. While most of my experience certainly resides in developing end-to-end, (strict)
+TypeScript React Web and React Native mobile applications, I have also built out extensive
+data pipelines, cut infrastructure costs by optimizing data storage, and deployed infrastructure
+utilizing best practices like Terraform and Kubernetes.
+
+In addition to my skill set, I have obtained a unique set of experiences that have allowed me to grow to be more than just a technically skilled developer. During my time as a government consultant, I immediately found myself leading the E-Verify API Modernization efforts. In my previous role, I found myself in a position where I needed to execute critical technical solutions. I was responsible for effectively orchestrating collaboration across both the Legacy and Modernization Agile Software development teams to ensure the satisfaction of high-stakes clients, like Equifax and ADP. 
+
+Most recently, I have taken the invaluable lessons I learned operating within a finely tuned Agile Software Development team to a fast-paced startup team where I was brought on as employee number six. My impact was felt immediately when I took responsibility for driving the adoption of essential Agile practices like stand-ups, product planning, and retrospectives. I significantly improved developer productivity and confidence through establishing and executing the iterative and rapid adoption of TypeScript. Through these diverse experiences, I've learned the importance of encouraging efficient processes and testing while facilitating rapid product iterations to increase both adoption and satisfaction for customers.
+
+Although my teammates know me best for my love of collaboration, thorough code reviews, and clean self-documenting code, my friends and family know me for my endless amount of positivity, contagious sense of humor, and my love for music and the great outdoors. My passion for collaboratively building resilient software combined with my unique set of experiences sets me apart in ways that would make me a valuable addition to any of 2Barrels’ impressive software development teams.
 `;
