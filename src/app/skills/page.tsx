@@ -3,16 +3,16 @@ import React from "react";
 import { PageHeader } from "../components/PageHeader";
 import { api } from "~/trpc/react";
 
-const skills = [
-  {
-    name: "TypeScript",
-    timeFrame: "2 years",
-  },
-  {
-    name: "React",
-    timeFrame: "4 years",
-  },
-];
+// const skills = [
+//   {
+//     name: "TypeScript",
+//     timeFrame: "2 years",
+//   },
+//   {
+//     name: "React",
+//     timeFrame: "4 years",
+//   },
+// ];
 
 export default function Skills() {
   const [skillsPrompt, setSkillsPrompt] = React.useState("");
@@ -43,9 +43,9 @@ export default function Skills() {
     <section className="rounded-lg bg-gradient-to-b from-zinc-700 to-dark p-4">
       <div>
         <PageHeader
-          stat={{ name: "skills", value: skills.length }}
           pageName={"Skills"}
           pageImagePath="/skills.png"
+          authorName="Software Engineer"
         />
       </div>
       <div className="flex w-full flex-col items-center justify-start self-center pt-4">
@@ -56,7 +56,7 @@ export default function Skills() {
         </p>
         <form
           onSubmit={async (e) => await onInputSubmit(e)}
-          className="flex w-3/4 flex-col items-center"
+          className="flex w-full flex-col items-center"
         >
           <input
             onChange={(e) => setSkillsPrompt(e.target.value)}

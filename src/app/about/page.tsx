@@ -42,7 +42,7 @@ export default function About() {
         </p>
         <form
           onSubmit={async (e) => await onInputSubmit(e)}
-          className="flex w-3/4 flex-col items-center"
+          className="flex w-full flex-col items-center"
         >
           <input
             onChange={(e) => setSuggestedSongPrompt(e.target.value)}
