@@ -1,3 +1,4 @@
+import { skillsRouter } from "~/server/api/routers/skills";
 import { spotifyRouter } from "~/server/api/routers/spotify";
 import { createTRPCRouter } from "~/server/api/trpc";
 
@@ -8,6 +9,7 @@ import { createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   spotify: spotifyRouter,
+  skills: skillsRouter,
 });
 
 // export type definition of API

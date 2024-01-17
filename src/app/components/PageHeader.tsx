@@ -6,11 +6,13 @@ interface PageProps {
   pageName: string;
   stat?: Stat;
   pageImagePath: string;
+  authorName?: string;
 }
 export const PageHeader: React.FC<PageProps> = ({
   stat,
   pageName,
   pageImagePath,
+  authorName,
 }) => {
   return (
     <div className="flex gap-4">
@@ -27,7 +29,7 @@ export const PageHeader: React.FC<PageProps> = ({
       </div>
       <div className="flex flex-col items-start justify-start">
         <h1>{pageName}</h1>
-        <ProfileUserTag stat={stat} />
+        <ProfileUserTag stat={stat} authorName={authorName} />
       </div>
     </div>
   );

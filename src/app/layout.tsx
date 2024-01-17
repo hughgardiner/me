@@ -34,32 +34,8 @@ const summaryTiles = [
     image: "/skills.png",
     needsContainer: true,
     path: "/skills",
+    author: 'Software Engineer'
   },
-  // {
-  //   title: "Interests",
-  //   path: '/interests',
-  //   // image: Headshot,
-  // },
-  // {
-  //   title: "Projects",
-  //   path: '/projects',
-  //   // image: Headshot,
-  // },
-  // {
-  //   title: "Music",
-  //   path: '/music',
-  //   // image: Headshot,
-  // },
-  // {
-  //   title: "Podcasts",
-  //   path: '/podcasts',
-  //   // image: Headshot,
-  // },
-  // {
-  //   title: "Austin",
-  //   path: '/austin',
-  //   // image: Headshot,
-  // },
 ];
 const renderChild = (tile: (typeof summaryTiles)[number]) => {
   const child = (
@@ -105,7 +81,7 @@ export default function RootLayout({
                         {renderChild(tile)}
                         <div className="flex flex-col">
                           <h2>{tile.title}</h2>
-                          <h3>{tile.author ?? "Hugh G"}</h3>
+                          <h3>{tile.author}</h3>
                         </div>
                       </Link>
                     ))}

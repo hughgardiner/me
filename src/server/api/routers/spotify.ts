@@ -61,7 +61,6 @@ export const spotifyRouter = createTRPCRouter({
       }
     }),
   getNowPlaying: publicProcedure.query(async () => {
-    // hack until i can figure out filtering on drizzle
     try {
       const getMySpotify = await db.select().from(spotify);
       const mySpotify = getMySpotify[0];
@@ -105,15 +104,11 @@ export const spotifyRouter = createTRPCRouter({
         expiresIn: mySpotify.expiresIn,
         lastRefreshedAt: mySpotify.updatedAt,
       });
-      console.log('About to fetch');
       const myTopSongs = await spotifyApi.getTopSongs();
-      console.log("Top Songs: ", myTopSongs);
       if (myTopSongs) {
         songs = myTopSongs.map((song) => `${song.song} by ${song.artist}`);
-        console.log('INCOMING: ', songs);
       }
       const { prompt } = input;
-      console.log("Prompt received: ", prompt);
       const suggestedSongResponse = await openai.chat.completions.create({
         messages: [
           {
@@ -126,7 +121,6 @@ export const spotifyRouter = createTRPCRouter({
         model: "gpt-3.5-turbo",
       });
 
-      console.log("suggestedSongResponse: ", suggestedSongResponse);
       return (
         suggestedSongResponse.choices[0]?.message.content ??
         "Oops something went wrong. Please try again later"
