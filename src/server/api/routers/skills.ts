@@ -17,7 +17,7 @@ export const skillsRouter = createTRPCRouter({
             Prompt = "${prompt}"`,
           },
         ],
-        model: "gpt-3.5-turbo",
+        model: "gpt-4",
       });
       return (
         skillsResponse.choices[0]?.message.content ??
