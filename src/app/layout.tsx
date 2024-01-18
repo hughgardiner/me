@@ -7,7 +7,6 @@ import { TRPCReactProvider } from "~/trpc/react";
 import Link from "next/link";
 import Image from "next/image";
 import { Library } from "./components/svgs/Library";
-import { NowPlayingFooter } from "./components/NowPlayingFooter";
 import { LibraryImageContainer } from "./components/LibaryImageContainer";
 
 const inter = Inter({
@@ -34,7 +33,7 @@ const summaryTiles = [
     image: "/skills.png",
     needsContainer: true,
     path: "/skills",
-    author: 'Software Engineer'
+    author: "Software Engineer",
   },
 ];
 const renderChild = (tile: (typeof summaryTiles)[number]) => {
@@ -44,7 +43,7 @@ const renderChild = (tile: (typeof summaryTiles)[number]) => {
       alt="Headshot"
       width={50}
       height={50}
-      className="rounded-md"
+      className="rounded-md self-center"
     />
   );
   return tile.needsContainer ? (
@@ -90,7 +89,20 @@ export default function RootLayout({
                 <div className="flex-1 overflow-y-auto">{children}</div>
               </div>
             </div>
-            <NowPlayingFooter />
+            <div className="fixed bottom-0 left-0 right-0 lg:hidden">
+              <div className="flex items-center justify-around py-2 bg-dark">
+                {summaryTiles.map((tile) => (
+                  <Link
+                    href={tile.path}
+                    key={tile.title}
+                    className="flex flex-col self-center"
+                  >
+                    {renderChild(tile)}
+                    <span className="text-zinc-400 self-center">{tile.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </TRPCReactProvider>
       </body>
