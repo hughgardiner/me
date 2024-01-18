@@ -36,21 +36,17 @@ const summaryTiles = [
     author: "Software Engineer",
   },
 ];
-const renderChild = (tile: (typeof summaryTiles)[number]) => {
+const renderChild = (tile: (typeof summaryTiles)[number], imageSize = 50) => {
   const child = (
     <Image
       src={tile.image ?? "/headshot.png"}
       alt="Headshot"
-      width={50}
-      height={50}
-      className="rounded-md self-center"
+      width={imageSize}
+      height={imageSize}
+      className={`rounded-md self-center ${tile.needsContainer ? "bg-zinc-700" : ""}`}
     />
   );
-  return tile.needsContainer ? (
-    <LibraryImageContainer>{child}</LibraryImageContainer>
-  ) : (
-    child
-  );
+  return child;
 };
 
 export default function RootLayout({
@@ -65,7 +61,7 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col">
             <div className="flex flex-1 flex-col">
               <div className="h-2/3 flex-1 grid-cols-main gap-2 px-3 pt-3 lg:grid">
-                <section className="hidden rounded-lg bg-dark p-5 lg:block">
+                <section className="hidden rounded-lg bg-dark p-5 lg:block sm:flex">
                   <div className="flex flex-row gap-2 p-1">
                     <Library />
                     <h2 className="text-zinc-400">My Library</h2>
@@ -86,10 +82,10 @@ export default function RootLayout({
                     ))}
                   </div>
                 </section>
-                <div className="flex-1 overflow-y-auto">{children}</div>
+                <div className="flex flex-1 overflow-y-auto">{children}</div>
               </div>
             </div>
-            <div className="fixed bottom-0 left-0 right-0 lg:hidden">
+            <div className="lg:hidden">
               <div className="flex items-center justify-around py-2 bg-dark">
                 {summaryTiles.map((tile) => (
                   <Link
@@ -97,7 +93,7 @@ export default function RootLayout({
                     key={tile.title}
                     className="flex flex-col self-center"
                   >
-                    {renderChild(tile)}
+                    {renderChild(tile, 25)}
                     <span className="text-zinc-400 self-center">{tile.title}</span>
                   </Link>
                 ))}

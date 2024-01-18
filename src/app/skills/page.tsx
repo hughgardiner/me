@@ -40,7 +40,7 @@ export default function Skills() {
     }
   };
   return (
-    <section className="rounded-lg bg-gradient-to-b from-zinc-700 to-dark p-4">
+    <section className="rounded-lg bg-gradient-to-b from-zinc-700 to-black p-4">
       <div>
         <PageHeader
           pageName={"Skills"}
