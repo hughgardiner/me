@@ -61,7 +61,7 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col">
             <div className="flex flex-1 flex-col">
               <div className="h-2/3 flex-1 grid-cols-main gap-2 px-3 pt-3 lg:grid">
-                <section className="hidden rounded-lg bg-dark p-5 lg:block sm:flex">
+                <section className="hidden rounded-lg bg-dark p-5 lg:block">
                   <div className="flex flex-row gap-2 p-1">
                     <Library />
                     <h2 className="text-zinc-400">My Library</h2>
@@ -82,7 +82,7 @@ export default function RootLayout({
                     ))}
                   </div>
                 </section>
-                <div className="flex flex-1 overflow-y-auto">{children}</div>
+                <div className="flex-1 overflow-y-auto">{children}</div>
               </div>
             </div>
             <div className="lg:hidden">
